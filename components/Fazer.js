@@ -6,8 +6,7 @@ import {
   Spinner,
 } from 'react-bootstrap'
 
-import '../styles/Menu.css'
-import FoodncoRows from '../components/FoodncoRows'
+import FazerRow from '../components/FazerRow'
 import foodnco from '../data/foodnco'
 
 const Menu = () => {
@@ -56,7 +55,7 @@ const Menu = () => {
         { Object.keys(data).length ?
           <>
             <Col  style={{padding:"3%"}}>
-              <FoodncoRows data={data} />
+              <FazerRow data={data} />
             </Col>
             <Col xs ={3}  style={{padding:"3%", height:"80%"}} className="d-flex align-items-start flex-column">
               {foodnco.diets.split(', ').map(diet => <>{diet}<br/></>)}

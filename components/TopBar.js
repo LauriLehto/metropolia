@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 import { Navbar } from 'react-bootstrap'
 import { Time } from './Time'
@@ -11,8 +12,8 @@ const TopBar = () => {
       style={{paddingTop:"3%"}}
       >
       <Navbar.Brand>
-        <img
-          src="metropolia.svg"
+        <Image
+          src="/metropolia.svg"
           width="150"
           height="50"
           className="d-inline-block align-top"

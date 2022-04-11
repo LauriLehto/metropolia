@@ -1,4 +1,4 @@
-import Fazer from '../comoponents/Fazer'
+import Fazer from '../components/Fazer'
 
 function fazerPage() {
   return (

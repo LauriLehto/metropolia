@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import '../styles/MealRow.css'
-
+import Image from 'next/image'
 import QRCode from 'qrcode.react'
 
 const MealRow = ({meal}) => {
@@ -28,7 +28,7 @@ const MealRow = ({meal}) => {
                 { meal.additionalDietInfo.dietcodeImages &&
                   meal.additionalDietInfo.dietcodeImages.map(image =>
                     <Col xs={4} key={meal.title_fi+image} className="d-flex align-self-center">
-                      <img   src={image}  alt='diet icon' />
+                      <Image  src={image}  alt='diet icon' />
                     </Col>
                   ) 
                 }

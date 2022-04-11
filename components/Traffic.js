@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, createRef, forwardRef } from 'react'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import axios from 'axios'
 import {
   Container,
@@ -11,137 +12,49 @@ import TopBar from './TopBar'
 
 import { getStopById, getStationInfo, stopsByRadius, hslApiUrl } from '../data/hslApi'
 
+import { convertSeconds } from '../lib/helpers'
+
+//Karaportti location
+const coordinates = {
+  lat: 60.2238794, 
+  lon: 24.758149
+}
+
 const Traffic = () => {
   const Map = dynamic(
-    () => import('./Map'), // replace '@components/map' with your component's location
-    { ssr: false } // This line is important. It's what prevents server-side render
+    () => import('./Map'),
+    { ssr: false }
   )
-  /* const ForwardedRefMap = ((props,ref) => (
-    <Map {...props} ref={ref} />
-  )) */
 
 
-  //Karaportti location
-  const kp = {
-    lat: 60.2238794, 
-    lon: 24.758149
-  }
 
   
-  const [hslData, setData] = useState([])
-  const [stops, setStops] = useState([])
+
+  
+  const [data, setData] = useState({
+    stops: [],
+    stopsData: []
+  })
+
+  const { stops, stopsData } = data
  
   useEffect(() => {
-    //present time in seconds for midnight check
-    let now = new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
-    let midnightCheck = now.split('klo')[1].split('.')
-    midnightCheck = midnightCheck.map(t => parseInt(t))
-    midnightCheck = midnightCheck[0]*3600+midnightCheck[1]*60+midnightCheck[2]
 
-
-    const updateStops = async (stops) => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      return Promise.all(stops.map(stop => getData(getStopById(stop.gtfsId))))
-    }
-  
-    const updateStations= async () => {
-      const hslStations = ['HSL:2000204']
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      return Promise.all(hslStations.map(id => getData(getStationInfo(id))))
-    }
-  
-    const updateStopsByRadius = async () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      return getData(stopsByRadius(kp.lat, kp.lon))
-    }
-  
-    const getData = async (query, id) => {
-      try {
-        return axios({
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-          url: hslApiUrl,
-          method: 'post',
-          data: {
-            query: query
-          }
-        });
-      } catch (err) {
-        console.error(err)
-      }
-    }
-
-    
-    let newData = []
-    
-    updateStopsByRadius()
-      .then(result => {
-        const stopsByR = result.data.data.stopsByRadius.edges.map(d => d.node.stop)
-        setStops(stopsByR)
-        
-        updateStops(stopsByR)
-          .then(result => {
-            result.map(r => {
-              const stop = r.data.data.stop.code
-              const data =  r.data.data.stop.stoptimesWithoutPatterns
-              //console.log(r.data.data.stop)
-              data.map(d=> {
-                const obj = {}
-                obj.stop = stop
-                obj.time = d.scheduledArrival
-                obj.heading = d.headsign
-                obj.type = "bus"
-                newData.push(obj)
-                return ''
-              })
-              //organise all results according to time
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              const cleanData = [...hslData, ...newData].sort((a, b) => a.time > b.time ? 1 : -1)
-              cleanData.filter((item, pos) => (cleanData[pos+1] && (cleanData[pos+1].heading !== item.heading)) ||  (cleanData[pos+1] && (cleanData[pos+1].time !== item.time)))
-              //organise results by day when nearing the end of the day (86400 -> 0000 seconds)
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              const dataDay1 = cleanData.filter(d => d.time > midnightCheck)
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              const dataDay2 = cleanData.filter(d => d.time < midnightCheck)
-              setData([...dataDay1, ...dataDay2])
-              return ''
-            })
-          })
-        updateStations()
-          .then(result => {
-            result.map(r =>{
-              const station = r.data.data.station.name
-              const data =  r.data.data.station.stoptimesWithoutPatterns
-              data.map(d=> {
-                const obj = {}
-                obj.stop = station
-                obj.time = d.scheduledArrival
-                obj.heading = d.headsign
-                obj.type = "train"
-                newData.push(obj)
-                return null;
-              })
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              const cleanData = [...hslData, ...newData].sort((a, b) => a.time > b.time ? 1 : -1)
-              cleanData.filter((item, pos) => (cleanData[pos+1] && (cleanData[pos+1].heading !== item.heading)) ||  (cleanData[pos+1] && (cleanData[pos+1].time !== item.time)))
-              //organise results by day when nearing the end of the day (86400 -> 0000 seconds)
-              const dataDay1 = cleanData.filter(d => d.time > midnightCheck)
-              const dataDay2 = cleanData.filter(d => d.time < midnightCheck)
-              setData([...dataDay1, ...dataDay2])
-              return null;
-            })
-          })
+    async function getTraficData(){
+      const result = await fetch('/api/liikenne', {
+        method:"POST",
+        body:JSON.stringify(coordinates)
       })
+      const resultJson = await result.json()
+      setData(resultJson)
+    
+    }
+    getTraficData()
       
-  }, [])
+  }, [setData])
 
   
-  const convertSeconds = (seconds) => {
-    let hours = parseInt(seconds / 3600)
-    if(hours===24){hours=0}
-    if(hours===25){hours=1}
-    const minutes = parseInt(seconds % 3600 / 60)
-    return `${hours.toString().length > 1 ? hours : `0${hours}`}:${minutes.toString().length > 1 ? minutes : `0${minutes}`}`
-  }
+  
   const mapRef=createRef(null)
 
   //console.log(hslData)
@@ -150,10 +63,10 @@ const Traffic = () => {
       <TopBar />
       <Row>
         <Col xs="6" md="6">
-          <Map mapRef={mapRef} ll={[60.2238794, 24.758149]} lat={kp.lat} lon={kp.lon} stops={stops} />
+          {stops.length && <Map mapRef={mapRef} ll={[60.2238794, 24.758149]} lat={coordinates.lat} lon={coordinates.lon} stops={data.stops} />}
         </Col>
         <Col xs="6" md="6">
-          {hslData.length &&
+          {stopsData.length &&
             <Table striped bordered hover variant="dark" size="sm">
               <thead>
                 <tr>
@@ -164,9 +77,9 @@ const Traffic = () => {
                 </tr>
               </thead>
             <tbody>
-              {hslData.slice(0,23).map(d => 
-                <tr key={hslData.indexOf(d)}>
-                  <td><img alt="transportation icon" style={{height:30,width:30}} src={d.type==="train" ? "Juna cmyk-test.svg" : "Bussi cmyk-01.svg"} /></td>
+              {stopsData.slice(0,23).map(d => 
+                <tr key={stopsData.indexOf(d)}>
+                  <td><Image alt="transportation icon" width="30px" height="30px" style={{height:30,width:30}} src={d.type==="train" ? "/Juna cmyk-test.svg" : "/Bussi cmyk-01.svg"} /></td>
                   <td>{convertSeconds(d.time)}</td>
                   <td>{d.heading.toUpperCase()}</td>
                   <td>{d.stop}</td>
