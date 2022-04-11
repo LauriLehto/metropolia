@@ -18,9 +18,9 @@ const updateStations= async () => {
   return Promise.all(hslStations.map(id => getData(getStationInfo(id))))
 }
 
-const updateStopsByRadius = async () => {
+const updateStopsByRadius = async (coordinates) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return getData(stopsByRadius(kp.lat, kp.lon))
+  return getData(stopsByRadius(coordinates.lat, coordinates.lon))
 }
 
 const getData = async (query, id) => {
