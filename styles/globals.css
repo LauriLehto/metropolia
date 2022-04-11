@@ -14,3 +14,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+tr > th, tr > td {
+  box-sizing: unset;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+tr > td {
+  white-space: nowrap; 
+  inline-size: 200px;
+  overflow: hidden;
+}

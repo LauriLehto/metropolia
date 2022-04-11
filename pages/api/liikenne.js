@@ -1,4 +1,4 @@
-import { getStopsByRadius, updateStops } from "../../lib/hsl"
+import { getStopsByRadius, updateStops } from "../../data/hsl"
 
 export default async function handler(req, res) {
 
