@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 
 const Map = ({mapRef, stops, lat, lon}) => {
   return (
-    <MapContainer ref={mapRef} center={[60.22465, 24.75940]} zoom={16} scrollWheelZoom={false} style={{ height: "85vh", width: '100%' }}>
+    <MapContainer ref={mapRef} center={[60.22465, 24.75940]} zoom={16} scrollWheelZoom={false} style={{height:"100%", width: '100%' }}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

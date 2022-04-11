@@ -16,13 +16,20 @@ a {
 }
 
 tr > th, tr > td {
-  box-sizing: unset;
-  font-size: x-large;
+  font-size: 1.2em;
   font-weight: bold;
 }
 
 tr > td {
   white-space: nowrap; 
-  inline-size: 200px;
   overflow: hidden;
+}
+
+table {
+  table-layout:fixed;
+  box-sizing: border-box;
+}
+
+h3 {
+  margin-right: 30px;
 }

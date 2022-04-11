@@ -16,19 +16,19 @@ function DataTable({data,slice}) {
     <Table striped bordered hover variant="dark" size="sm">
       <thead>
         <tr>
-          <th></th>
-          <th>Aika</th>
-          <th>Suunta</th>
-          <th>Pysäkki</th>
+          <th style={{width:"10%"}}></th>
+          <th  style={{width:"15%"}}>Aika</th>
+          <th  style={{width:"60%"}}>Suunta</th>
+          <th  style={{width:"25%"}}>Pysäkki</th>
         </tr>
       </thead>
       <tbody>
         {data.slice(slice[0],slice[1]).map(d => 
           <tr key={data.indexOf(d)}>
-            <td><Image alt="transportation icon" width="30px" height="30px" style={{height:30,width:30}} src={d.type==="train" ? "/Juna cmyk-test.svg" : "/Bussi cmyk-01.svg"} /></td>
+            <td ><Image alt="transportation icon" width="30px" height="30px" src={d.type==="train" ? "/Juna cmyk-test.svg" : "/Bussi cmyk-01.svg"} /></td>
             <td>{convertSeconds(d.time)}</td>
-            <td style={{whiteSpace: "nowrap", inlineSize: "200px", overflow: "hidden"}}>{d.heading.toUpperCase()}</td>
-            <td style={{whiteSpace: "nowrap", inlineSize: "200px"}}>{d.stop}</td>
+            <td>{d.heading.toUpperCase()}</td>
+            <td>{d.stop}</td>
           </tr>
         )}
       </tbody>
@@ -79,13 +79,13 @@ const Traffic = () => {
       <TopBar />
       <Row>
         <Col xs="4">
-          {stops.length && <Map mapRef={mapRef} lat={coordinates.lat} lon={coordinates.lon} stops={data.stops} />}
+          {!!stops.length && <Map mapRef={mapRef} lat={coordinates.lat} lon={coordinates.lon} stops={data.stops} />}
         </Col>
         <Col xs="4">
-          {stopsData.length && <DataTable data={stopsData} slice={[0,18]} />}
+          {!!stopsData.length && <DataTable data={stopsData} slice={[0,15]} />}
         </Col>
         <Col xs="4">
-          {stopsData.length && <DataTable data={stopsData} slice={[19,36]} />}
+          {!!stopsData.length && <DataTable data={stopsData} slice={[15,30]} />}
         </Col>
       </Row>
     </Container>
