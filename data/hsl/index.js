@@ -60,11 +60,14 @@ export const updateStops = async (stops) => {
   let mergedData2 = [].concat.apply([], stationsData);
   const mergedData = mergedData1.concat(mergedData2)
 
-  const cleanData = mergedData.sort((a, b) => a.time > b.time ? 1 : -1)
-  cleanData.filter((item, pos) => (cleanData[pos+1] && (cleanData[pos+1].heading !== item.heading)) ||  (cleanData[pos+1] && (cleanData[pos+1].time !== item.time)))
-  const dataDay1 = cleanData.filter(d => d.time > midnightCheck)
-  const dataDay2 = cleanData.filter(d => d.time < midnightCheck)
+  let orderedData = mergedData.sort((a, b) => a.time < b.time ? 1 : -1)
+  orderedData = orderedData.reverse()
+ /*  orderedData.filter((item, pos) => (orderedData[pos+1] && (orderedData[pos+1].heading !== item.heading)) ||  (orderedData[pos+1] && (orderedData[pos+1].time !== item.time))) */
+  //orderedData.filter((item, pos) => orderedData[pos+1] && (orderedData[pos+1].time !== item.time))
+  const dataDay1 = orderedData.filter(d => d.time > 45000)
+  const dataDay2 = orderedData.filter(d => d.time < 45000)
   const updatedData = [...dataDay1, ...dataDay2]
+
   return updatedData
 }
 

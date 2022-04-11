@@ -17,9 +17,9 @@ function DataTable({data,slice}) {
       <thead>
         <tr>
           <th style={{width:"10%"}}></th>
-          <th  style={{width:"15%"}}>Aika</th>
-          <th  style={{width:"60%"}}>Suunta</th>
-          <th  style={{width:"25%"}}>Pysäkki</th>
+          <th style={{width:"20%"}}>Aika</th>
+          <th style={{width:"50%"}}>Suunta</th>
+          <th style={{width:"30%"}}>Pysäkki</th>
         </tr>
       </thead>
       <tbody>
@@ -53,6 +53,8 @@ const Traffic = () => {
     stopsData: []
   })
 
+  console.log(data.stopsData.map(s=> s.time))
+
   const { stops, stopsData } = data
  
   useEffect(() => {
@@ -82,10 +84,10 @@ const Traffic = () => {
           {!!stops.length && <Map mapRef={mapRef} lat={coordinates.lat} lon={coordinates.lon} stops={data.stops} />}
         </Col>
         <Col xs="4">
-          {!!stopsData.length && <DataTable data={stopsData} slice={[0,15]} />}
+          {!!stopsData.length && <DataTable data={stopsData} slice={[0,14]} />}
         </Col>
         <Col xs="4">
-          {!!stopsData.length && <DataTable data={stopsData} slice={[15,30]} />}
+          {!!stopsData.length && <DataTable data={stopsData} slice={[14,28]} />}
         </Col>
       </Row>
     </Container>
