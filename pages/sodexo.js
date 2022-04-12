@@ -1,16 +1,10 @@
 import Sodexo from '../components/Sodexo'
 import React, {useEffect, useState} from 'react'
-import { 
-  Container,
-  Col, 
-  Row,
-  Spinner
-} from 'react-bootstrap'
 
 import SodexoRow from '../components/SodexoRow'
 import sodexo from '../data/sodexo'
 
-const sodexoPage = () => {
+const SodexoPage = () => {
 
   const [ data, setData ] = useState({})
   const [ fetched, setFetched ] = useState(false)
@@ -41,4 +35,4 @@ const sodexoPage = () => {
   )
 }
 
-export default sodexoPage
+export default SodexoPage

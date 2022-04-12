@@ -4,7 +4,7 @@ import Fazer from '../components/Fazer'
 
 import foodnco from '../data/foodnco'
 
-function fazerPage() {
+function FazerPage() {
 
   const [ data, setData ] = useState({})
 
@@ -45,4 +45,4 @@ function fazerPage() {
   )
 }
 
-export default fazerPage
+export default FazerPage

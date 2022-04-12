@@ -7,9 +7,6 @@ import {
 } from 'react-bootstrap'
 
 import SodexoRow from '../components/SodexoRow'
-import sodexo from '../data/sodexo'
-
-
 
 const Menu = ({data, fetched}) => {
 
@@ -19,7 +16,6 @@ const Menu = ({data, fetched}) => {
 
   if(data.meta){
     console.log(data.meta.ref_url)
-
   }
   
   return (

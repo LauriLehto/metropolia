@@ -8,7 +8,7 @@ const coordinates = {
   lon: 24.758149
 }
 
-const liikennePage = () => {
+const LiikennePage = () => {
   const [data, setData] = useState({
     stops: [],
     stopsData: []
@@ -33,4 +33,4 @@ const liikennePage = () => {
     )
 }
 
-export default liikennePage
+export default LiikennePage
