@@ -36,19 +36,22 @@ function DataTable({data,slice}) {
   )
 }
 
-//Karaportti location
+/* //Karaportti location
 const coordinates = {
   lat: 60.2238794, 
   lon: 24.758149
 }
-
-const Traffic = () => {
+ */
+const Traffic = ({data,coordinates}) => {
   const Map = dynamic(
     () => import('./Map'),
     { ssr: false }
   )
 
-  const [data, setData] = useState({
+  const { stops, stopsData } = data
+
+
+  /* const [data, setData] = useState({
     stops: [],
     stopsData: []
   })
@@ -69,7 +72,7 @@ const Traffic = () => {
     }
     getTraficData()
       
-  }, [setData])
+  }, [setData]) */
 
   
   
@@ -81,7 +84,7 @@ const Traffic = () => {
       <TopBar />
       <Row>
         <Col xs="4">
-          {!!stops.length && <Map mapRef={mapRef} lat={coordinates.lat} lon={coordinates.lon} stops={data.stops} />}
+          {!!stops.length && <Map mapRef={mapRef} lat={coordinates.lat} lon={coordinates.lon} stops={stops} />}
         </Col>
         <Col xs="4">
           {!!stopsData.length && <DataTable data={stopsData} slice={[0,14]} />}

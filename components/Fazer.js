@@ -22,10 +22,11 @@ const Menu = () => {
   useEffect(()=>{
     const today = todayTimeString()
     try {
-      fetch(`/.netlify/functions/node-fetch/?location=foodnco&date=${today}`, { 
+      fetch('/fazer', { 
         headers: { accept: "Accept: application/json" }, 
-        
-      }, {query: today})
+        method: "POST",
+        body: today
+      })
         .then((x) => x.json())
         .then(({ data }) => {
           setData(data)
