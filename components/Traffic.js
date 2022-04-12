@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createRef, forwardRef } from 'react'
+import { createRef } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import {
@@ -36,49 +36,16 @@ function DataTable({data,slice}) {
   )
 }
 
-/* //Karaportti location
-const coordinates = {
-  lat: 60.2238794, 
-  lon: 24.758149
-}
- */
 const Traffic = ({data,coordinates}) => {
   const Map = dynamic(
     () => import('./Map'),
     { ssr: false }
   )
 
-  const { stops, stopsData } = data
-
-
-  /* const [data, setData] = useState({
-    stops: [],
-    stopsData: []
-  })
-
-  console.log(data.stopsData.map(s=> s.time))
-
-  const { stops, stopsData } = data
- 
-  useEffect(() => {
-    async function getTraficData(){
-      const result = await fetch('/api/liikenne', {
-        method:"POST",
-        body:JSON.stringify(coordinates)
-      })
-      const resultJson = await result.json()
-      setData(resultJson)
-    
-    }
-    getTraficData()
-      
-  }, [setData]) */
-
-  
+  const { stops, stopsData } = data  
   
   const mapRef=createRef(null)
 
-  //console.log(hslData)
   return (
     <Container fluid>
       <TopBar />

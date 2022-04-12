@@ -17,8 +17,8 @@ const liikennePage = () => {
   useEffect(() => {
     async function getTraficData(){
       const result = await fetch('/api/liikenne', {
-        method:"POST",
-        body:JSON.stringify(coordinates)
+        method: "POST",
+        body: JSON.stringify(coordinates)
       })
       const resultJson = await result.json()
       setData(resultJson)

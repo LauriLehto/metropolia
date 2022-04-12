@@ -5,10 +5,9 @@ const baseUrl = `https://www.sodexo.fi/en/ruokalistat/output/daily_json/158/`;
 
 export default async function handler(req, res) {
 
-
   console.log(req.body)
   const {date} = req.body
-  console.log(req)
+  //console.log(req)
   const url = `${baseUrl}${date}`
   try {
     const response = await fetch(url, {
@@ -27,11 +26,10 @@ export default async function handler(req, res) {
       body: JSON.stringify({ data: data }),
     } */
     res.status(200).json({ 
-      menu:{}
+      data
     })
   } catch (error) {
     // output to netlify function log
-    console.log(error)
     /* return {
       statusCode: 500,
       // Could be a custom message or object i.e. JSON.stringify(err)
@@ -44,4 +42,3 @@ export default async function handler(req, res) {
 
 }
 
-module.exports = { handler }
