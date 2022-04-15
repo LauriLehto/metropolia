@@ -44,7 +44,7 @@ const Menu = (fetched,data) => {
             </Col>
           </>
           : 
-          fetched ? <div>Food 'n' Co ruokalista ei ole saatavilla</div> : <Spinner animation="border" role="status" variant="dark" />
+          fetched ? <div>{"Food 'n' Co ruokalista ei ole saatavilla"}</div> : <Spinner animation="border" role="status" variant="dark" />
           
         }
       </Row>
