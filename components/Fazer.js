@@ -6,36 +6,11 @@ import {
   Spinner,
 } from 'react-bootstrap'
 
-import FazerRow from '../components/FazerRow'
+import TopBar from './TopBar'
+import FazerRow from './FazerRow'
 import foodnco from '../data/foodnco'
 
-const Menu = () => {
-
-  const [ data, setData ] = useState({})
-
-  const todayTimeString = () => {
-    let now = new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
-    let time = now.split(' ')[0].split('.').map(Function.prototype.call, String.prototype.trim).map(t => t.length===1 ? '0'+t : t).reverse().join('-')
-    return time
-  }
-
-  useEffect(()=>{
-    const today = todayTimeString()
-    try {
-      fetch('/fazer', { 
-        headers: { accept: "Accept: application/json" }, 
-        method: "POST",
-        body: today
-      })
-        .then((x) => x.json())
-        .then(({ data }) => {
-          setData(data)
-        })
-    } catch(err){
-      console.error(err)
-    }
-    
-  },[setData])
+const Menu = (fetched,data) => {
 
   return (
     <Container 
@@ -43,17 +18,23 @@ const Menu = () => {
       style={{height: '80%', margin: 'auto'}}
       /* className="d-flex align-items-center justify-content-center flex-column" */
     >
+      <TopBar/>
       <Row style={{paddingTop:"5%"}}>
-        <Col style={{fontSize:'1.2em'}}>{`Food & CO - ${foodnco.address}`}</Col>
+        <Col xs={6} style={{fontSize:'1.2em'}}>{`Food & CO - ${foodnco.address}`}</Col>
+        <Col xs={2}>
+          <Row>{foodnco.open.fi}</Row>
+          <Row>{foodnco.open.en}</Row>
+        </Col>
+        <Col sx={2}> klo. {foodnco.open.time}</Col>
+        <Col sx={2}>
+          <Row>{foodnco.lunch.fi}</Row>
+          <Row>{foodnco.lunch.en}</Row>
+        </Col>
+        <Col sx={2}> klo. {foodnco.lunch.time}</Col>
       </Row>
-      <Row style={{padding:"2%"}}>
-        <Col xs={6}>{foodnco.open.fi} / {foodnco.open.en} klo. {foodnco.open.time}</Col>
-        <Col xs={6}>{foodnco.lunch.fi} / {foodnco.lunch.en} klo. {foodnco.lunch.time}</Col>
-      </Row>
-      <br />
       <Row 
         >
-        { Object.keys(data).length ?
+        { data.courses ?
           <>
             <Col  style={{padding:"3%"}}>
               <FazerRow data={data} />
@@ -63,9 +44,11 @@ const Menu = () => {
             </Col>
           </>
           : 
-          <Spinner animation="border" role="status" variant="light" />
+          fetched ? <div>Food 'n' Co ruokalista ei ole saatavilla</div> : <Spinner animation="border" role="status" variant="dark" />
+          
         }
       </Row>
+      <br/>
       <footer style={{fontSize: '1.2em'}}>{foodnco.info}</footer>
     </Container> 
   )

@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react'
 import { 
   Container,
   Col, 
@@ -7,29 +6,24 @@ import {
 } from 'react-bootstrap'
 
 import SodexoRow from '../components/SodexoRow'
+import TopBar from './TopBar'
 
 const Menu = ({data, fetched}) => {
 
-  const checkDataReceived = () => {
-    fetched ? <div>Ei tietoja saatavilla</div> : <Spinner animation="border" role="status" variant="light" />
-  }
-
-  if(data.meta){
-    console.log(data.meta.ref_url)
-  }
-  
   return (
     <Container fluid>
+      <TopBar />
       <Row className="d-flex align-items-center justify-content-center">
-        { Object.keys(data).length ?
+        { data.courses ?
           <Col>
             { Object.keys(data.courses).map(c => {
               return <SodexoRow key={data.courses[c].title_fi} meal={data.courses[c]} />
-              
             })}
           </Col>
           : 
-          checkDataReceived()
+          <Col>
+            {fetched ? <div>Sodexon ruokalista ei ole saatavilla</div> : <Spinner animation="border" role="status" variant="dark" />}
+          </Col>
         }
       </Row>
     </Container> 

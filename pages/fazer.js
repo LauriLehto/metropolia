@@ -7,6 +7,7 @@ import foodnco from '../data/foodnco'
 function FazerPage() {
 
   const [ data, setData ] = useState({})
+  const [ fetched, setFetched ] = useState(false)
 
   const todayTimeString = () => {
     let now = new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
@@ -26,8 +27,8 @@ function FazerPage() {
         })
           .then((x) => x.json())
           .then(({ data }) => {
-            console.log(data)
             setData(data);
+            setFetched(true)
           });
       } catch(err){
         console.error(err);
@@ -41,7 +42,7 @@ function FazerPage() {
 
 
   return (
-    <Fazer data={data} />
+    <Fazer data={data} fetched={fetched} />
   )
 }
 
