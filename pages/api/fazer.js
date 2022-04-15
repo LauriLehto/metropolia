@@ -1,44 +1,40 @@
 
 /* let now = new Date().toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })
 let time = now.split(' ')[0].split('.').map(Function.prototype.call, String.prototype.trim).map(t => t.length===1 ? '0'+t : t).reverse().join('-') */
-const baseUrl = `https://www.sodexo.fi/en/ruokalistat/output/daily_json/158/`;
+const url =  `https://www.foodandco.fi/modules/json/json/Index?costNumber=3208`
 
+"https://www.foodandco.fi/modules/json/json/Index?costNumber=3208&language=fi"
 export default async function handler(req, res) {
 
-  console.log(req.body)
-  const {date} = req.body
-  //console.log(req)
-  const url = `${baseUrl}${date}`
   try {
-    const response = await fetch(url, {
+    const responseFi = await fetch(`${url}&language=fi`, {
       headers: { Accept: 'application/json' },
     })
-    if (!response.ok) {
+    if (!responseFi.ok) {
       // NOT res.status >= 200 && res.status < 300
-      return { statusCode: response.status, body: response.statusText }
+      return { statusCode: responseFi.status, body: responseFi.statusText }
     }
-    const data = await response.json()
-    data.url=url
-    console.log(data)
-
-    /* return {
-      statusCode: 200,
-      body: JSON.stringify({ data: data }),
-    } */
-    res.status(200).json({ 
-      data
+    const responseEn = await fetch(`${url}&language=en`, {
+      headers: { Accept: 'application/json' },
     })
+    if (!responseEn.ok) {
+      // NOT res.status >= 200 && res.status < 300
+      return { statusCode: responseEn.status, body: responseEn.statusText }
+    }
+    const data = {} 
+    data.fi= await responseFi.json()
+    data.en= await responseEn.json()
+
+    res.status(200).json({data})
+
   } catch (error) {
     // output to netlify function log
-    /* return {
+    console.log(error)
+    return {
       statusCode: 500,
       // Could be a custom message or object i.e. JSON.stringify(err)
       body: JSON.stringify({ data: error.message }),
-    } */
-    res.status(500).json({ 
-      error
-    })
+    }
   }
-
 }
 

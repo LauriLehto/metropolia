@@ -22,10 +22,13 @@ const Menu = ({data, fetched}) => {
           </Col>
           : 
           <Col>
-            {fetched ? <div>Sodexon ruokalista ei ole saatavilla</div> : <Spinner animation="border" role="status" variant="dark" />}
+            {fetched ? <div style={{maring:"50px"}}>Sodexon ruokalista ei ole saatavilla</div> : <Spinner animation="border" role="status" variant="dark" />}
           </Col>
         }
       </Row>
+      <footer>
+        {data.meta && data.meta.ref_title}
+      </footer>
     </Container> 
   )
 }
