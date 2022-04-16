@@ -34,6 +34,7 @@ const Menu = ({fetched,data}) => {
       {/* Restaurant open and closed information */}
       <Row>
         <Col xs={4} style={{textAlign:"center"}}>{`Food & CO - ${foodnco.address}`}</Col>
+        <Col sx="auto"></Col>
         { !!data.fi && data.fi.MenusForDays[0].LunchTime ? 
           <>
             <Col sx={2}>
@@ -43,9 +44,8 @@ const Menu = ({fetched,data}) => {
             <Col sx={1}> klo. {data.fi.MenusForDays[0].LunchTime}</Col>
           </>
           : 
-          <Col sx={3}>Ravintola suljettu tänään</Col>
+          <Col sx={3} style={{textAlign:"center"}}>Ravintola suljettu tänään</Col>
         }
-        <Col sx="auto"></Col>
         <Col xs={2}>
           <Row>{foodnco.open.fi}</Row>
           <Row>{foodnco.open.en}</Row>
