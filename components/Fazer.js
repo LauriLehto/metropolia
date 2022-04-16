@@ -28,37 +28,38 @@ const Menu = ({fetched,data}) => {
   return (
     <Container 
       fluid 
-      //style={{height: '80%', margin: 'auto'}}
-      /* className="d-flex align-items-center justify-content-center flex-column" */
+      style={{margin:"20px"}}
     >
       <TopBar/>
+      {/* Restaurant open and closed information */}
       <Row>
         <Col xs={6} style={{fontSize:'1.2em', margin: "20 0"}}>{`Food & CO - ${foodnco.address}`}</Col>
-        <Col xs={2}>
-          <Row>{foodnco.open.fi}</Row>
-          <Row>{foodnco.open.en}</Row>
-        </Col>
-        <Col sx={2}> klo. {foodnco.open.time}</Col>
         { data.fi.MenusForDays[0].LunchTime ? 
           <>
-            <Col sx={2}>
+            <Col sx={1}>
               <Row>{foodnco.lunch.fi}</Row>
               <Row>{foodnco.lunch.en}</Row>
             </Col>
-            <Col sx={2}> klo. {data.fi.MenusForDays[0].LunchTime}</Col>
+            <Col sx={1}> klo. {data.fi.MenusForDays[0].LunchTime}</Col>
           </>
           : 
-          <Col sx={4}>Ravintola suljettu tänään</Col>
+          <Col sx={2}>Ravintola suljettu tänään</Col>
         }
+        <Col xs={1}>
+          <Row>{foodnco.open.fi}</Row>
+          <Row>{foodnco.open.en}</Row>
+        </Col>
+        <Col sx={1}> klo. {foodnco.open.time}</Col>
       </Row>
+      {/* Lunch menu items */}
       <Row style={{minHeight: "60vh"}}>
-        { data.courses ?
+        { data.fi.MenusForDays[0].SetMenus[0] ?
           <>
             <Col>
               <FazerRow data={data} />
             </Col>
-            <Col xs={3} className="d-flex align-items-start flex-column">
-              {foodnco.diets.split(', ').map(diet => <>{diet}<br/></>)}
+            <Col xs={2} className="d-flex align-items-start flex-column justify-content-center p-10">
+              {foodnco.diets.split(', ').map(diet => <Row style={{margin:"10px"}}>{diet}</Row>)}
             </Col>
           </>
           : 

@@ -22,6 +22,6 @@ export const Time = () => {
     'Lauantai'
   ]
   return (
-    <h3>{time&&`${days[time.getDay()].toUpperCase()}  ${time.toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}`}</h3>
+    <h3 className="time">{time&&`${days[time.getDay()].toUpperCase()}  ${time.toLocaleString('fi-FI', { timeZone: 'Europe/Helsinki' })}`}</h3>
   )
 }
