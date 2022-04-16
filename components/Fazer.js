@@ -24,7 +24,7 @@ const Menu = ({fetched,data}) => {
   }, []);
 
 
-  console.log(data)
+  //console.log(data)
   return (
     <Container 
       fluid 
@@ -34,7 +34,7 @@ const Menu = ({fetched,data}) => {
       {/* Restaurant open and closed information */}
       <Row>
         <Col xs={6} style={{fontSize:'1.2em', margin: "20 0"}}>{`Food & CO - ${foodnco.address}`}</Col>
-        { data.fi.MenusForDays[0].LunchTime ? 
+        { !!data.fi && data.fi.MenusForDays[0].LunchTime ? 
           <>
             <Col sx={1}>
               <Row>{foodnco.lunch.fi}</Row>
@@ -53,13 +53,13 @@ const Menu = ({fetched,data}) => {
       </Row>
       {/* Lunch menu items */}
       <Row style={{minHeight: "60vh"}}>
-        { data.fi.MenusForDays[0].SetMenus[0] ?
+        { !!data.fi && !!data.fi.MenusForDays[0].SetMenus[0] ?
           <>
             <Col>
               <FazerRow data={data} />
             </Col>
             <Col xs={2} className="d-flex align-items-start flex-column justify-content-center p-10">
-              {foodnco.diets.split(', ').map(diet => <Row style={{margin:"10px"}}>{diet}</Row>)}
+              {foodnco.diets.split(', ').map(diet => <Row style={{margin:"10px"}} key={diet}>{diet}</Row>)}
             </Col>
           </>
           : 
