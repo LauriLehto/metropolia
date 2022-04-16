@@ -26,26 +26,25 @@ const Menu = ({fetched,data}) => {
 
   //console.log(data)
   return (
-    <Container 
-      fluid 
-      style={{margin:"20px"}}
+    <Container fluid 
+    style={{padding:" 0 25px"}}
     >
       <TopBar/>
       {/* Restaurant open and closed information */}
       <Row>
-        <Col xs={6} style={{fontSize:'1.2em', margin: "20 0"}}>{`Food & CO - ${foodnco.address}`}</Col>
+        <Col xs={6}>{`Food & CO - ${foodnco.address}`}</Col>
         { !!data.fi && data.fi.MenusForDays[0].LunchTime ? 
           <>
-            <Col sx={1}>
+            <Col sx={2}>
               <Row>{foodnco.lunch.fi}</Row>
               <Row>{foodnco.lunch.en}</Row>
             </Col>
             <Col sx={1}> klo. {data.fi.MenusForDays[0].LunchTime}</Col>
           </>
           : 
-          <Col sx={2}>Ravintola suljettu tänään</Col>
+          <Col sx={3}>Ravintola suljettu tänään</Col>
         }
-        <Col xs={1}>
+        <Col xs={2}>
           <Row>{foodnco.open.fi}</Row>
           <Row>{foodnco.open.en}</Row>
         </Col>
