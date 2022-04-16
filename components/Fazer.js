@@ -28,6 +28,7 @@ const Menu = ({fetched,data}) => {
   return (
     <Container fluid 
     style={{padding:" 0 25px"}}
+    className="fazer"
     >
       <TopBar/>
       {/* Restaurant open and closed information */}
