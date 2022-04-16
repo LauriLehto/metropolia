@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
 
 a {
@@ -51,5 +50,5 @@ footer {
 
 .fazer > *{
   font-size: 1.5em;
-  font-weight: 500;
+  font-weight: 800;
 }
