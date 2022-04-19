@@ -27,7 +27,7 @@ const Menu = ({fetched,data}) => {
   //console.log(data)
   return (
     <Container fluid 
-    style={{padding:" 0 25px"}}
+    style={{display: "inline-block",margin:"25px"}}
     className="fazer"
     >
       <TopBar/>

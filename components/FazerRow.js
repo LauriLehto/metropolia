@@ -25,8 +25,8 @@ const MealRow = ({data}) => {
                     <>
                       <Row  key={mealDataFi[0]}>
                         <Col xs={6}>
-                          <Row>{mealDataFi[0].toUpperCase()}</Row>
-                          <Row style={{fontStyle:'italic'}}>{mealDataEn[0]}</Row>
+                          <Row style={{marginLeft:"20px"}}>{mealDataFi[0].toUpperCase()}</Row>
+                          <Row style={{marginLeft: "30px",fontStyle:'italic'}}>{mealDataEn[0]}</Row>
                         </Col>
                         <Col xs={4} className="d-flex align-items-center">
                           <Row>{mealDataFi[1].replace(')','')}</Row>

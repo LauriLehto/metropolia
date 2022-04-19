@@ -12,7 +12,6 @@ a {
 
 * {
   box-sizing: border-box;
-  text-transform: uppercase;
 }
 
 tr > th, tr > td {
@@ -49,6 +48,6 @@ footer {
 }
 
 .fazer > *{
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: 800;
 }
