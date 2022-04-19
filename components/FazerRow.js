@@ -23,20 +23,19 @@ const MealRow = ({data}) => {
                   const mealDataEn = en_components[index].split('(')
                   return (
                     <>
-                      <Row  key={mealDataFi[0]}>
-                        <Col xs={6}>
-                          <Row style={{marginLeft:"20px"}}>{mealDataFi[0].toUpperCase()}</Row>
-                          <Row style={{marginLeft: "30px",fontStyle:'italic'}}>{mealDataEn[0]}</Row>
+                      <Row xs={7} className="d-flex justify-content-center" key={mealDataFi[0]}>
+                        <Col xs={7}>
+                          <Row className="d-flex justify-content-start" >{mealDataFi[0].toUpperCase()}</Row>
+                          <Row className="d-flex justify-content-end">{mealDataEn[0]}</Row>
                         </Col>
-                        <Col xs={4} className="d-flex align-items-center">
+                        <Col xs={3} className="d-flex justify-content-end">
                           <Row>{mealDataFi[1].replace(')','')}</Row>
                         </Col>
                       </Row>
                     </>
                   )
                 })}
-                <br />
-                <hr />
+                <hr  />
               </>
             )
           })
