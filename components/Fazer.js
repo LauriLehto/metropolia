@@ -33,37 +33,27 @@ const Menu = ({fetched,data}) => {
       {/* Restaurant open and closed information */}
       <Row>
         <Col xs={4} style={{textAlign:"center"}}>{`Food & CO - ${foodnco.address}`}</Col>
-        <Col style={{flex:1}}></Col>
+        <Col>
         { !!data.fi && data.fi.MenusForDays[0].LunchTime ? 
-          <>
-            <Col xs={1}>
-              <Row>{foodnco.lunch.fi}</Row>
-              <Row>{foodnco.lunch.en}</Row>
-            </Col>
-            <Col xs={2}> klo. {data.fi.MenusForDays[0].LunchTime}</Col>
-          </>
+          <>{foodnco.lunch.fi} / {foodnco.lunch.en} klo. {data.fi.MenusForDays[0].LunchTime}</>
           : 
-          <Col xs={3} style={{textAlign:"center"}}>Ravintola suljettu tänään</Col>
+          <>Ravintola suljettu tänään</>
         }
-        <Col xs={2}>
-          <Row>{foodnco.open.fi}</Row>
-          <Row>{foodnco.open.en}</Row>
         </Col>
-        <Col sx={2}> klo. {foodnco.open.time}</Col>
+        <Col>
+          <Row>{foodnco.open.fi} / {foodnco.open.en} klo. {foodnco.open.time}</Row>
+        </Col>
       </Row>
-      {/* Lunch menu items */}
       <hr  />
-
+      <Container fluid style={{maxWidth:"90vw"}}>
+      {/* Lunch menu items */}
       <Row style={{minHeight: "60vh"}}>
         { !!data.fi && !!data.fi.MenusForDays[0].SetMenus[0] ?
           <>
             <Col>
               <FazerRow data={data} />
             </Col>
-            {/* Dieatry information */}
-            <Col xs={3} className="d-flex align-items-start flex-column justify-content-center p-10">
-              {foodnco.diets.split(', ').map(diet => <Row style={{margin:"10px"}} key={diet}>{diet}</Row>)}
-            </Col>
+            
           </>
           : 
           fetched ? 
@@ -71,9 +61,13 @@ const Menu = ({fetched,data}) => {
             : 
             <Spinner animation="border" role="status" variant="dark" />
         }
-      </Row>    
+      </Row>
+      </Container>
+
       <footer className="field" ref={fieldRef}>
-        {data.fi && data.fi.Footer}
+        {/* Dieatry information */}
+        {foodnco.diets}
+        {/* {data.fi && data.fi.Footer} */}
       </footer>
     </Container> 
   )
